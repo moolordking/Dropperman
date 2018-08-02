@@ -1,0 +1,128 @@
+
+<html>
+
+<head>
+    <title>Dropperman</title>
+    <link rel="shortcut icon" href="http://www.iconarchive.com/download/i97724/danieledesantis/playstation-flat/playstation-square-black-and-white.ico" />
+</head>
+
+<body bgcolor="black">
+    <center>
+        <canvas id="gameCanvas" width="320" height="420"></canvas>
+    </center>
+</body>
+    <style>
+        font{
+            font-size: 10px;
+                    }
+        button{
+            width:100px;
+            height:100px;
+            background-color:black;
+            color: white;
+            font-size:30px;
+            font-family:Arial Black;
+        }
+        </style>
+<script>
+    var canvas;
+    var canvasContext;
+    var plx = 160;
+    var ply = 393;
+    var plspeed = 0;
+    var enx = 160;
+    var eny = 2;
+    var enspeed = 3;
+    var score = 0;
+
+
+
+    window.onload = function () {
+        console.log("Hello world!");
+        canvas = document.getElementById('gameCanvas');
+        canvasContext = canvas.getContext('2d');
+
+
+        var frpese = 60;
+        setInterval(doEverything, 1000 / frpese);
+    }
+
+
+
+    function drawEverything() {
+
+        canvasContext.fillStyle = 'white';
+        canvasContext.fillRect(0, 0, canvas.width, canvas.height);
+        canvasContext.fillStyle = 'black';
+        canvasContext.fillRect(plx, ply, 12.5, 25);
+        canvasContext.fillStyle = 'black';
+        canvasContext.fillRect(enx, eny, 12.5, 12.5);
+
+
+    }
+
+    function moveEverything() {
+        plx = plx + plspeed;
+        if (plx > 310) {
+            plspeed = -1;
+
+        }
+        if (plx < 0) {
+            plspeed = 1;
+
+        }
+        eny = eny + enspeed;
+        enspeed = enspeed + 0.01;
+        if (eny > 420) {
+            enx = Math.floor(Math.random() * 310) + 1;
+            eny = 0;
+            score = score + 1;
+
+
+        }
+
+
+
+    }
+
+    function doEverything() {
+        moveEverything();
+        drawEverything();
+        death();
+        draw();
+    }
+
+    function death() {
+        if (plx < enx + 25 &&
+            plx + 25 > enx &&
+            ply < eny + 25 &&
+            50 + ply > eny) {
+            score = 0;
+            enspeed = 2;
+        }
+
+    }
+
+    function draw() {
+        var ctx = document.getElementById('gameCanvas').getContext('2d');
+        ctx.font = '35px Arial Black';
+        ctx.fillText(score, 155, 150);
+    }
+
+
+    function moveleft(){
+        plspeed = plspeed - 0.5;
+    }
+        function moveright(){
+        plspeed = plspeed + 0.5;
+    }
+    
+</script>
+    <body>
+        <br>
+<center><button onmousedown="moveleft()"><</button>
+    <button onmousedown="moveright()">></button></center>
+        <br>
+    </body>
+
+</html>
